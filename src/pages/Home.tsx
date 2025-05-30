@@ -1,17 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { useEffect, useState  } from "react"
 import GameService from "../service/GameService";
+import Banner from "../components/Banner";
+import type { CardProductProps } from "../components/CardProdutos";
+import CardProduct from "../components/CardProdutos";
 
-interface Produto {
-    id: number;
-    titulo: string;
-    plataforma: string;
-    preco: number;
-}
 
 export default function Home() {
 
-    const [list, setList] = useState<Produto[]>([]);
+    const [list, setList] = useState<CardProductProps[]>([]);
 
     async function init() {
         const produtos = await GameService.getAllProdutos();
@@ -30,14 +28,17 @@ export default function Home() {
 
 
         <div className="w-full h-screen pt-13">
+
+             <Banner/>
             {
-                list.map((item) => {
+                list.map((item, index) => {
                     return (
-                        <div key={item.id}>{item.titulo}</div>
+                        <CardProduct titulo={item.titulo} preco={item.preco} plataforma={item.plataforma} categoria={item.categoria} />
                     )
                 }
                 )
             }
+           
         </div>
 
 
